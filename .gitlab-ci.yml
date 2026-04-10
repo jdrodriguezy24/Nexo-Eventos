@@ -76,7 +76,7 @@ deploy_development:
     - echo "Backend verificado en src/server.js"
   environment:
     name: development
-    url: https://dev.nexo-eventos.example.com
+    url: https://jdrodriguezy24-group.gitlab.io/Nexo-Eventos/dev/
   only:
     - develop
   when: always
