@@ -9,9 +9,11 @@ build_frontend:
   script:
     - npm install
     - npm run build
+    - mkdir - public
+    - cp -r dist/* public/
   artifacts:
     paths:
-      - dist/
+      - public/
     expire_in: 30 days
   cache:
     paths:
@@ -53,9 +55,10 @@ deploy_production:
     - build_frontend
     - build_backend
   script:
-    - echo "Preparando despliegue en producción..."
-    - echo "Frontend compilado correctamente en dist/"
-    - echo "Backend verificado en src/server.js"
+    - echo "Deploy en produccion completado"
+  artifacts:
+    paths:
+      - public/
   environment:
     name: production
     url: https://jdrodriguezy24-group.gitlab.io/Nexo-Eventos/
@@ -71,9 +74,10 @@ deploy_development:
     - build_frontend
     - build_backend
   script:
-    - echo "Preparando despliegue en desarrollo..."
-    - echo "Frontend compilado correctamente en dist/"
-    - echo "Backend verificado en src/server.js"
+    - echo "Deploy en desarrollo completado"
+  artifacts:
+    paths:
+      - public/
   environment:
     name: development
     url: https://jdrodriguezy24-group.gitlab.io/Nexo-Eventos/dev/
