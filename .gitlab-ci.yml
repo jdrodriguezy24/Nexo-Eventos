@@ -55,6 +55,8 @@ pages:
     - build_frontend
     - build_backend
   script:
+    - echo "Verificando contenido de public/"
+    - ls -R public/
     - echo "Deploy en produccion completado"
   artifacts:
     paths:
@@ -65,7 +67,7 @@ pages:
   only:
     - main
     - master
-  when: manual
+  when: on_success
 
 deploy_development:
   stage: deploy
