@@ -58,7 +58,7 @@ deploy_production:
     - echo "Backend verificado en src/server.js"
   environment:
     name: production
-    url: https://nexo-eventos.example.com
+    url: https://jdrodriguezy24-group.gitlab.io/Nexo-Eventos/
   only:
     - main
     - master
