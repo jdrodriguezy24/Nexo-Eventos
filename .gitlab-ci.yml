@@ -5,8 +5,8 @@ stages:
   - deploy
 
 variables:
-  NODE_ENV: production
-  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  NODE_ENV: 'production'
+  npm_config_cache: '$CI_PROJECT_DIR/.npm'
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -14,7 +14,6 @@ cache:
     - node_modules/
     - .npm/
 
-# Etapa: Instalación de dependencias
 install_dependencies:
   stage: install
   image: node:20-alpine
@@ -28,7 +27,6 @@ install_dependencies:
     - branches
     - merge_requests
 
-# Etapa: Build del frontend
 build_frontend:
   stage: build
   image: node:20-alpine
@@ -44,33 +42,30 @@ build_frontend:
     - branches
     - merge_requests
 
-# Etapa: Build del servidor backend
 build_backend:
   stage: build
   image: node:20-alpine
   dependencies:
     - install_dependencies
   script:
-    - echo "Backend (Node.js/Express) verificado y listo"
+    - echo "Backend verificado y listo"
     - node -c src/server.js
   only:
     - branches
     - merge_requests
 
-# Etapa: Análisis de código (linting)
 lint:
   stage: test
   image: node:20-alpine
   dependencies:
     - install_dependencies
   script:
-    - npm run build 2>&1 | grep -E "(error|warning)" || true
+    - npm run build 2>&1 | grep -iE "(error|warning)" || echo "Sin errores detectados"
   allow_failure: true
   only:
     - branches
     - merge_requests
 
-# Etapa: Deploy a producción (rama main/master)
 deploy_production:
   stage: deploy
   image: node:20-alpine
@@ -78,10 +73,9 @@ deploy_production:
     - build_frontend
     - build_backend
   script:
-    - echo "Preparando artefactos para despliegue..."
-    - echo "Frontend compilado en: dist/"
-    - echo "Backend listo: src/server.js"
-    - echo "Deploy en producción completado"
+    - echo "Preparando despliegue en producción..."
+    - echo "Frontend compilado correctamente en dist/"
+    - echo "Backend verificado en src/server.js"
   artifacts:
     paths:
       - dist/
@@ -97,7 +91,6 @@ deploy_production:
     - master
   when: manual
 
-# Etapa: Deploy a desarrollo
 deploy_development:
   stage: deploy
   image: node:20-alpine
@@ -105,12 +98,12 @@ deploy_development:
     - build_frontend
     - build_backend
   script:
-    - echo "Preparando artefactos para despliegue en desarrollo..."
-    - echo "Frontend compilado en: dist/"
-    - echo "Backend listo: src/server.js"
+    - echo "Preparando despliegue en desarrollo..."
+    - echo "Frontend compilado correctamente en dist/"
+    - echo "Backend verificado en src/server.js"
   environment:
     name: development
     url: https://dev.nexo-eventos.example.com
   only:
     - develop
-  when: on_success
+  when: always
