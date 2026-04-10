@@ -3,9 +3,6 @@ stages:
   - test
   - deploy
 
-variables:
-  NODE_ENV: 'production'
-
 build_frontend:
   stage: build
   image: node:20
