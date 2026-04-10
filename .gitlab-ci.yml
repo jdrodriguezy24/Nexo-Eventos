@@ -48,7 +48,7 @@ lint:
     - branches
     - merge_requests
 
-deploy_production:
+pages:
   stage: deploy
   image: node:20
   needs:
