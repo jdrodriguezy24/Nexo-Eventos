@@ -53,17 +53,14 @@ pages:
   image: node:20
   needs:
     - build_frontend
-    - build_backend
   script:
-    - echo "Verificando contenido de public/"
-    - ls -R public/
     - echo "Deploy en produccion completado"
   artifacts:
     paths:
       - public/
   environment:
     name: production
-    url: https://jdrodriguezy24-group.gitlab.io/Nexo-Eventos/
+    url: https://nexo-eventos-442af1.gitlab.io/
   only:
     - main
     - master
